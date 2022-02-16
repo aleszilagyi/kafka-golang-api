@@ -1,8 +1,0 @@
-application:
-  kafka:
-    configs:
-      bootstrap.server: kafka:9092
-      client.id: kafka-course
-      group.id: kafka-course
-    topics:
-      - courses
