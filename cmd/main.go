@@ -48,12 +48,18 @@ func main() {
 
 	for msg := range messageChannel {
 		var input = kafkaCourse.NewCourseInputDto()
-		json.Unmarshal(msg.Value, &input)
-		output, err := usecase.Execute(input)
-		if err != nil {
-			log.Error(err.Error())
+
+		err := json.Unmarshal(msg.Value, &input)
+		if err == nil {
+			output, err := usecase.Execute(input)
+			if err != nil {
+				log.Error(err.Error())
 			} else {
-			log.Infof("Message consumed with output: %s", output)
+				log.Infof("Message consumed with output: %s", output)
+			}
+		} else {
+			log.Errorf("Unmarshal failed for: %s", msg.Value)
 		}
+
 	}
 }

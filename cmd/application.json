@@ -9,10 +9,10 @@
       "topics": ["courses"]
     },
     "mysql": {
-      "table": "courses",
       "port": "3306",
-      "user": "root",
-      "password": "root"
+      "password": "root",
+      "table": "courses",
+      "database": "courses"
     }
   }
 }

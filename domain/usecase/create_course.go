@@ -21,7 +21,7 @@ func (createCourse CreateCourse) Execute(input kafka.CourseInputDto) (kafka.Cour
 		return kafka.CourseOutputDto{}, err
 	}
 
-	output := kafka.NewCourseOutputDto(course.ID, course.Name, course.Description, course.Status)
+	output := kafka.NewCourseOutputDto(course.ID, course.Name, course.Description, string(course.Status))
 
 	return output, nil
 }
