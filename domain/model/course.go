@@ -1,35 +1,47 @@
 package model
 
-type statusEnum string
+type StatusEnum string
 
 const (
-	Undefined  statusEnum = "UNDEFINED"
-	InProgress            = "IN_PROGRESS"
-	Ready                 = "READY"
+	UNAVAILABLE StatusEnum = "UNAVAILABLE"
+	DEVELOPMENT StatusEnum = "DEVELOPMENT"
+	ON_HOLD     StatusEnum = "ON_HOLD"
+	OUTDATED    StatusEnum = "OUTDATED"
+	READY       StatusEnum = "READY"
+	UP          StatusEnum = "UP"
 )
 
 type Course struct {
 	ID          string
 	Name        string
 	Description string
-	Status      statusEnum
+	Status      StatusEnum
 }
 
-func returnStatusEnum(status string) statusEnum {
+func ReturnStatusEnum(status string) StatusEnum {
 	switch status {
-	case "IN_PROGRESS":
-		return InProgress
+	case "UP":
+		return UP
 
 	case "READY":
-		return Ready
+		return READY
+
+	case "OUTDATED":
+		return OUTDATED
+
+	case "ON_HOLD":
+		return ON_HOLD
+
+	case "DEVELOPMENT":
+		return DEVELOPMENT
 
 	default:
-		return Undefined
+		return UNAVAILABLE
 	}
 }
 
 func NewCourse(id, name, description, status string) Course {
-	statusCourse := returnStatusEnum(status)
+	statusCourse := ReturnStatusEnum(status)
 
 	return Course{
 		ID:          id,

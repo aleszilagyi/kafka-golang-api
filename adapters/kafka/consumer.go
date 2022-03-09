@@ -23,16 +23,16 @@ func (c *Consumer) Consume(messageChannel chan *ckafka.Message) {
 	consumer, err := ckafka.NewConsumer(c.ConfigMap)
 	if err != nil {
 		log.Error(err.Error())
-		panic("App is shutting down due to reason: Error creating consumer")
+		panic("app is shutting down due to reason: error creating consumer")
 	}
 	
 	err = consumer.SubscribeTopics(c.Topics, nil)
 	if err != nil {
 		log.Error(err.Error())
-		panic("App is shutting down due to reason: Error subscribing to topics")
+		panic("app is shutting down due to reason: error subscribing to topics")
 	}
 
-	log.Info("Consumer successfully connected to broker")
+	log.Info("consumer successfully connected to broker")
 
 	for {
 		msg, err := consumer.ReadMessage(-1)
