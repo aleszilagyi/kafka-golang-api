@@ -10,9 +10,11 @@
     },
     "mysql": {
       "port": "3306",
+      "user": "root",
       "password": "root",
       "table": "courses",
-      "database": "courses"
+      "database": "courses",
+      "hostname": "mysql"
     }
   }
 }

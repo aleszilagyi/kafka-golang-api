@@ -5,34 +5,33 @@ import (
 	"encoding/json"
 	"fmt"
 
-	logWrapper "github.com/aleszilagyi/kafka-golang-api/adapters/config/logger"
+	"github.com/aleszilagyi/kafka-golang-api/adapters/config/logger"
 	kafkaCourse "github.com/aleszilagyi/kafka-golang-api/adapters/kafka"
 	courseRepository "github.com/aleszilagyi/kafka-golang-api/adapters/repository"
 	courseUsecase "github.com/aleszilagyi/kafka-golang-api/domain/usecase"
+	"github.com/aleszilagyi/kafka-golang-api/resources"
 	ckafka "github.com/confluentinc/confluent-kafka-go/kafka"
 	_ "github.com/go-sql-driver/mysql"
-	viper "github.com/spf13/viper"
 )
 
+var (
+	log *logger.StandardLogger
+	env *resources.AppEnv
+)
+
+func init() {
+	log = logger.NewLogger()
+	env = resources.GetConf()
+}
+
 func main() {
-	log := logWrapper.NewLogger()
+	log.Info("application starting")
 
-	viper.SetConfigName("application")
-	viper.SetConfigType("json")
-	viper.AddConfigPath(".")
+	dbString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", env.DbConfig.User, env.DbConfig.Hostname, env.DbConfig.Password, env.DbConfig.Port, env.DbConfig.Database)
 
-	err := viper.ReadInConfig()
-	if err != nil {
-		panic(err)
-	}
+	configMapConsumer := env.Kafka.KafkaConfigs
 
-	dbConfigs := viper.GetStringMapString("application.mysql")
-	dbString := fmt.Sprintf("%s:%s@tcp(mysql:%s)/%s", dbConfigs["user"], dbConfigs["password"], dbConfigs["port"], dbConfigs["table"])
-
-	configMapConsumer := &ckafka.ConfigMap{}
-
-	topics := viper.GetStringSlice("application.kafka.topics")
-	viper.UnmarshalKey("application.kafka.configs", configMapConsumer)
+	topics := env.Kafka.Topics
 
 	db, err := sql.Open("mysql", dbString)
 	if err != nil {
@@ -55,10 +54,10 @@ func main() {
 			if err != nil {
 				log.Error(err.Error())
 			} else {
-				log.Infof("Message consumed with output: %s", output)
+				log.Infof("message consumed with output: %s", output)
 			}
 		} else {
-			log.Errorf("Unmarshal failed for: %s", msg.Value)
+			log.Errorf("unmarshal failed for: %s", msg.Value)
 		}
 
 	}
