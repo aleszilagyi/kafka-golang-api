@@ -28,7 +28,7 @@ func init() {
 }
 
 func main() {
-
+	log.Info("app starting")
 	dbString := fmt.Sprintf("%s:%s@tcp(mysql:%s)/%s", envs.MysqlEnv.User, envs.MysqlEnv.Password, envs.MysqlEnv.Port, envs.MysqlEnv.Table)
 
 	configMapConsumer := &ckafka.ConfigMap{}

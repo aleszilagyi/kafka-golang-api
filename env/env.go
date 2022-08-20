@@ -18,7 +18,7 @@ type AppEnv struct {
 }
 
 type KafkaEnv struct {
-	KafkaTopics []string `mapstructure:"config"`
+	KafkaTopics []string `mapstructure:"topics"`
 }
 
 type MysqlEnv struct {
