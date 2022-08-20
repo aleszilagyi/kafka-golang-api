@@ -31,7 +31,8 @@ func main() {
 
 	dbString := fmt.Sprintf("%s:%s@tcp(mysql:%s)/%s", envs.MysqlEnv.User, envs.MysqlEnv.Password, envs.MysqlEnv.Port, envs.MysqlEnv.Table)
 
-	configMapConsumer := env.GetKafkaEnvs(&ckafka.ConfigMap{})
+	configMapConsumer := &ckafka.ConfigMap{}
+	env.GetKafkaEnvs(configMapConsumer)
 
 	db, err := sql.Open("mysql", dbString)
 	if err != nil {

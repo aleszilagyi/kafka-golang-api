@@ -39,10 +39,9 @@ func GetConf() *AppEnv {
 	return envs
 }
 
-func GetKafkaEnvs(configMap *ckafka.ConfigMap) *ckafka.ConfigMap {
+func GetKafkaEnvs(configMap *ckafka.ConfigMap) {
 	readEnv()
 	viper.UnmarshalKey("application.kafka.configs", configMap)
-	return configMap
 }
 
 func readEnv() {
