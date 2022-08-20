@@ -1,0 +1,20 @@
+{
+  "application": {
+    "kafka": {
+      "configs": {
+        "bootstrap.servers": "kafka:29092",
+        "client.id": "kafka-course",
+        "group.id": "kafka-course"
+      },
+      "topics": ["courses"]
+    },
+    "mysql": {
+      "port": "3306",
+      "user": "root",
+      "password": "root",
+      "table": "courses",
+      "database": "courses",
+      "hostname": "mysql"
+    }
+  }
+}

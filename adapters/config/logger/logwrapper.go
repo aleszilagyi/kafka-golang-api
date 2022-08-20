@@ -7,8 +7,8 @@ type StandardLogger struct {
 }
 
 func NewLogger() *StandardLogger {
-	baseLogger := logrus.New()
-	standardLogger := &StandardLogger{baseLogger}
+	logger := logrus.New()
+	standardLogger := &StandardLogger{logger}
 	standardLogger.Formatter = &logrus.JSONFormatter{}
 
 	return standardLogger
